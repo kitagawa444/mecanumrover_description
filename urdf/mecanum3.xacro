@@ -7,7 +7,6 @@
 <!-- OPTION: LRF TG30 -->
 <!-- <xacro:include filename="$(find vs_rover_options_description)/urdf/lrf/tg30_mecanum3.xacro" /> -->
 
-
 <link name="base_footprint" />
 
 <joint name="base_joint" type="fixed">
@@ -121,6 +120,29 @@
   </collision>
 </link>
 
+<link name="LiDAR">
+  <inertial>
+    <origin xyz="0.00023 -0.00145 0.00000" rpy="0 0 90"/>
+    <mass value="0.262"/>
+    <inertia ixx="0.112383" ixy="-0.000264" ixz="-0.00000115" 
+             iyy="0.124665" iyz="-0.00000044" 
+             izz="0.122901"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://mecanumrover_description/meshes/LiDAR.stl"/>
+    </geometry>
+    <material name="dark_grey"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://mecanumrover_description/meshes/LiDAR.stl"/>
+    </geometry>
+  </collision>
+</link>
+
 <joint name="front_left_joint" type="continuous">
   <origin xyz="-0.0875 0.12 0.076" rpy="0 0 0"/>
   <parent link="base_link"/>
@@ -148,5 +170,13 @@
   <child link="back_left_wheel_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
 </joint>
+
+<joint name="LiDAR_joint" type="fixed">
+  <origin xyz="0.0 0.12 0.160" rpy="0 0 ${radians(-90)}"/>
+  <parent link="base_link"/>
+  <child link="LiDAR"/>
+  <axis xyz="1.0 0.0 0.0"/>
+</joint>
+
 
 </robot>
