@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="rvizconfig" default="$(find mecanumrover_description)/rviz/urdf.rviz"/>
+
+  <group ns = "master">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="robot_name" value="master" />
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/mecanum3.xacro" />
+    </include>
+  </group>
+
+  <node name="rviz" pkg="rviz" args="-d $(arg rvizconfig)" type="rviz" required="true"/>
+ 
+</launch>

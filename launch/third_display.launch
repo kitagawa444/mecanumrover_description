@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="rvizconfig" default="$(find mecanumrover_description)/rviz/urdf.rviz"/>
+
+  <group ns = "master">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="robot_name" value="master" />
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/mecanum3.xacro" />
+    </include>
+  </group>
+
+  <group ns = "slave1">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="robot_name" value="slave1" />
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/mecanum3.xacro" />
+    </include>
+  </group>
+
+  <group ns = "slave2">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="robot_name" value="slave2" />
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/mecanum3.xacro" />
+    </include>
+  </group>
+
+  <group ns = "pallet">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/pallet.xacro" />
+      <arg name="robot_name" value="pallet" />
+    </include>
+  </group>
+
+  <group ns = "weight">
+    <include file="$(find mecanumrover_description)/launch/display.launch">
+      <arg name="model" value = "$(find mecanumrover_description)/urdf/weight.xacro" />
+      <arg name="robot_name" value="weight" />
+    </include>
+  </group>
+
+
+  <node name="rviz" pkg="rviz" args="-d $(arg rvizconfig)" type="rviz" required="true"/>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="pallet_master_tf" args="0.25 -0.19 -0.32 0 0 0 pallet/base_link master/base_footprint" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="pallet_slave1_tf" args="-0.2 0.0 -0.32 0 0 0 pallet/base_link slave1/base_footprint" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="pallet_slave2_tf" args="0.25 0.19 -0.32 0 0 0 pallet/base_link slave2/base_footprint" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="pallet_weight_tf" args="0.0 0.0 0.1 0 0 0 pallet/base_link weight/base_link" />
+ 
+</launch>
